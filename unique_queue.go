@@ -72,7 +72,7 @@ func (u *UniqueQueue) UniqueLpush(q string, body string) (int, error) {
 	rc := u.pool.Get()
 	defer rc.Close()
 
-	script := redis.NewScript(1, SCRIPT_PUSH)
+	script := redis.NewScript(1, SCRIPT_LPUSH)
 	resp, err := redis.Int(script.Do(rc, q, body))
 	if err == redis.ErrNil {
 		err = nil
