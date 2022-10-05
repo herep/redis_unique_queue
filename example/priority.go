@@ -1,4 +1,4 @@
-package main
+package redis_unique_queue
 
 import (
 	"fmt"
@@ -17,7 +17,6 @@ func main() {
 		RedisIdleTimeOut: 1000,
 	}
 	redis_client := unique_queue.NewRedisPool(redis_client_config)
-
 
 	qname := "xiaorui.cc"
 	u := unique_queue.NewPriorityQueue(3, true, redis_client)

@@ -1,4 +1,4 @@
-package main
+package redis_unique_queue
 
 import (
 	"fmt"
@@ -18,21 +18,15 @@ func main() {
 	}
 	redis_client := unique_queue.NewRedisPool(redis_client_config)
 
-
 	qname := "xiaorui.cc"
 	u := unique_queue.NewUniqueQueue(redis_client)
 	for i := 0; i < 100; i++ {
 		u.UniquePush(qname, "body...")
 	}
 
-	fmt.Println(u.Length(qname))
-
 	for i := 0; i < 100; i++ {
 		u.UniquePop(qname)
 	}
-
-	fmt.Println(u.Length(qname))
-
 
 	fmt.Println("end")
 }

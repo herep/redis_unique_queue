@@ -41,8 +41,7 @@ return v
 `
 )
 
-
-type UniqueQueue struct{
+type UniqueQueue struct {
 	pool *redis.Pool
 }
 
@@ -66,9 +65,7 @@ func (u *UniqueQueue) UniquePush(q string, body string) (int, error) {
 	return resp, err
 }
 
-// return 1, push success
-// return 0, not push, set filter
-func (u *UniqueQueue) UniqueLpush(q string, body string) (int, error) {
+func (u *UniqueQueue) UniqueLPush(q string, body string) (int, error) {
 	rc := u.pool.Get()
 	defer rc.Close()
 
@@ -106,13 +103,13 @@ func (u *UniqueQueue) Clear(q string) (resp int, err error) {
 	defer rc.Close()
 
 	resp, err = redis.Int(rc.Do("DEL", q))
-	if err != nil{
+	if err != nil {
 		return resp, err
 	}
 	resp, err = redis.Int(rc.Do("DEL", u.getQueueSet(q)))
 	return resp, err
 }
 
-func (u *UniqueQueue) getQueueSet(q string) (string) {
+func (u *UniqueQueue) getQueueSet(q string) string {
 	return q + "_set"
 }
